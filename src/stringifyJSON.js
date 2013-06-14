@@ -4,12 +4,15 @@
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
   if(Array.isArray(obj)) {
-  	var arrayString = '[';
+  	var arrayString = new String('[');
 
-  	 obj.forEach(function(value) {
-  	 	console.log(value);
-  		arrayString += stringifyJSON(value);
+  	obj.forEach(function(value) {
+	  	arrayString += stringifyJSON(value) + ',';
   	});
+
+  	if(arrayString.slice(-1)==',') {
+  		arrayString = arrayString.slice(0,-1);
+  	}
 
   	arrayString += ']';
   	return arrayString;
