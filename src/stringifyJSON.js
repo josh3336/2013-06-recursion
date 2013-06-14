@@ -3,14 +3,15 @@
 
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
-	if(obj===null) {
+	if(obj === null) {
 		return "null";
 	}
 
 	// if obj is an array or object...
-  	if(typeof obj == "object") {
+  	if(typeof obj === "object") {
 		var returnString = new String();
 
+		// building a string for arrays
 	  	if(Array.isArray(obj)) {
 	  		obj.forEach(function(value) {
 				returnString += stringifyJSON(value) + ',';
@@ -20,9 +21,11 @@ var stringifyJSON = function (obj) {
 
 	  		returnString = '[' + returnString + ']';
 	  	}
+
+	  	// building a string for non-array objects
 	  	else {
 	  		for(var key in obj) {
-	  			if(typeof obj[key] == "undefined") {
+	  			if(obj[key] === undefined) {
 	  				returnString = '';
 	  			}
 	  			else {
@@ -41,7 +44,7 @@ var stringifyJSON = function (obj) {
 	  	//console.log(returnString);
 	  	return returnString;
 	}
-	else if(typeof obj == "string") {
+	else if(typeof obj === "string") {
 		return '\"' + obj + '\"';
 	}
 	else {
@@ -49,12 +52,7 @@ var stringifyJSON = function (obj) {
 	}
 };
 
-// function to remove the comma at the end of a string
+// checks and removes the comma at the end of a string
 var killComma = function (inputString) {
-	if(inputString.slice(-1) == ',') {
-		return inputString.slice(0,-1);
-  	}
-  	else {
-  		return inputString;
-  	}
+	return (inputString.slice(-1) == ',') ? inputString.slice(0,-1) : inputString;
 }
