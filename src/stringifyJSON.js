@@ -54,5 +54,5 @@ var stringifyJSON = function (obj) {
 
 // checks and removes the comma at the end of a string
 var killComma = function (inputString) {
-	return (inputString.slice(-1) == ',') ? inputString.slice(0,-1) : inputString;
+	return (inputString.slice(-1) === ",") ? inputString.slice(0,-1) : inputString;
 }
