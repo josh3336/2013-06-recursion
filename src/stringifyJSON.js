@@ -6,7 +6,18 @@ var stringifyJSON = function (obj) {
 	if(obj===null) {
 		return "null";
 	}
+	if(obj===undefined) {
+		console.log("undefined");
+		return '';
+	}
+	// if(typeof obj == "function") {
+	// 	console.log("Function");
 
+	// 	return '';
+	// }
+
+
+	// if obj is an array or object...
   	if(typeof obj == "object") {
 		var returnString = new String();
 
@@ -20,8 +31,6 @@ var stringifyJSON = function (obj) {
 	  		returnString = '[' + returnString + ']';
 	  	}
 	  	else {
-	  		console.log("Object breh");
-
 	  		for(var key in obj) {
 	  			returnString += stringifyJSON(key);
 	  			returnString += ':';
