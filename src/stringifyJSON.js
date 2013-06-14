@@ -6,16 +6,6 @@ var stringifyJSON = function (obj) {
 	if(obj===null) {
 		return "null";
 	}
-	if(obj===undefined) {
-		console.log("undefined");
-		return '';
-	}
-	// if(typeof obj == "function") {
-	// 	console.log("Function");
-
-	// 	return '';
-	// }
-
 
 	// if obj is an array or object...
   	if(typeof obj == "object") {
@@ -32,10 +22,15 @@ var stringifyJSON = function (obj) {
 	  	}
 	  	else {
 	  		for(var key in obj) {
-	  			returnString += stringifyJSON(key);
-	  			returnString += ':';
-				returnString += stringifyJSON(obj[key]);
-				returnString += ',';
+	  			if(typeof obj[key] == "undefined") {
+	  				returnString = '';
+	  			}
+	  			else {
+		  			returnString += stringifyJSON(key);
+		  			returnString += ':';
+					returnString += stringifyJSON(obj[key]);
+					returnString += ',';
+				}
 	  		}
 
 	  		returnString = killComma(returnString);
@@ -43,7 +38,7 @@ var stringifyJSON = function (obj) {
 	  		returnString = '{' + returnString + '}';
 	  	}
 
-	  	console.log(returnString);
+	  	//console.log(returnString);
 	  	return returnString;
 	}
 	else if(typeof obj == "string") {
