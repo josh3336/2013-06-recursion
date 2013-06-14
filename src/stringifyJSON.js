@@ -3,27 +3,54 @@
 
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
-  if(Array.isArray(obj)) {
-  	var arrayString = new String('[');
+	if(obj===null) {
+		return "null";
+	}
 
-  	obj.forEach(function(value) {
-	  	arrayString += stringifyJSON(value) + ',';
-  	});
+  	if(typeof obj == "object") {
+		var returnString = new String();
 
-  	if(arrayString.slice(-1)==',') {
-  		arrayString = arrayString.slice(0,-1);
-  	}
+	  	if(Array.isArray(obj)) {
+	  		obj.forEach(function(value) {
+				returnString += stringifyJSON(value) + ',';
+	  		});
 
-  	arrayString += ']';
-  	return arrayString;
-  }
-  else if(obj===null) {
-  	return "null";
-  }
-  else if(typeof obj == "string"){
-  	return '\"' + obj + '\"';
-  }
-  else {
-  	return obj.toString();
-  }
+	  		returnString = killComma(returnString);
+
+	  		returnString = '[' + returnString + ']';
+	  	}
+	  	else {
+	  		console.log("Object breh");
+
+	  		for(var key in obj) {
+	  			returnString += stringifyJSON(key);
+	  			returnString += ':';
+				returnString += stringifyJSON(obj[key]);
+				returnString += ',';
+	  		}
+
+	  		returnString = killComma(returnString);
+
+	  		returnString = '{' + returnString + '}';
+	  	}
+
+	  	console.log(returnString);
+	  	return returnString;
+	}
+	else if(typeof obj == "string") {
+		return '\"' + obj + '\"';
+	}
+	else {
+		return obj.toString();
+	}
 };
+
+// function to remove the comma at the end of a string
+var killComma = function (inputString) {
+	if(inputString.slice(-1) == ',') {
+		return inputString.slice(0,-1);
+  	}
+  	else {
+  		return inputString;
+  	}
+}
