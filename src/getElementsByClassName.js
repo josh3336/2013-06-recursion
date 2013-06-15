@@ -12,32 +12,41 @@ var getElementsByClassName = function (className) {
 	return results;
 };
 
+/*
+	Felt I had to write a separate function that would pass
+	along the current node. Don't know if there was another way
+	to do this.
+
+	Decided to pass the array of matching elements because it
+	would add matching elements as the function found them.
+	Had I returned a matching element, then popped them up,
+	I think my array would be backwards. i.e. smallest children
+	would be first and the first match it came across would be last.
+*/
 
 var traverseDOM = function (node, className, matches) {
-	var numClasses = 0;
-	var numChildNodes = 0;
-
 	if(node.classList) {
-		numClasses = node.classList.length;
-	}
+		var numClasses = node.classList.length;
 
-	if(node.childNodes) {
-		numChildNodes = node.childNodes.length;
-	}
-	
-	// looks through the class list of the node to see if there is a match
-	if(numClasses>0) {
-		for(var i=0; i<numClasses; i++) {
-			if(node.classList[i]===className) {
-				matches.push(node);
+		// looks through the class list of the node to see if there is a match
+		// if there is a match, add it to the array of matching elements
+		if(numClasses>0) {
+			for(var i=0; i<numClasses; i++) {
+				if(node.classList[i]===className) {
+					matches.push(node);
+				}
 			}
 		}
 	}
 
-	// if there are child nodes, recurse through those
-	if(numChildNodes>0) {
-		for(var i=0; i<numChildNodes; i++) {
-			traverseDOM(node.childNodes[i], className, matches);
+	if(node.childNodes) {
+		var numChildNodes = node.childNodes.length;
+
+		// if there are child nodes, recurse through those
+		if(numChildNodes>0) {
+			for(var i=0; i<numChildNodes; i++) {
+				traverseDOM(node.childNodes[i], className, matches);
+			}
 		}
 	}
 }
