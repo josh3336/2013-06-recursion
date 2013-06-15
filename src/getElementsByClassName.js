@@ -7,7 +7,9 @@
 var getElementsByClassName = function (className) {
 	var results = new Array();
 
-	return traverseDOM(document.body, className, results);
+	traverseDOM(document.body, className, results);
+
+	return results;
 };
 
 
@@ -28,9 +30,6 @@ var traverseDOM = function (node, className, matches) {
 		for(var i=0; i<numClasses; i++) {
 			if(node.classList[i]===className) {
 				matches.push(node);
-
-				console.log("node" + node);
-				console.log("array: " + matches);
 			}
 		}
 	}
