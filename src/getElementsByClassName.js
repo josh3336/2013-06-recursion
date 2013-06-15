@@ -5,5 +5,40 @@
 
 // But in stead we're going to implement it from scratch:
 var getElementsByClassName = function (className) {
-  // your code here
+	var results = new Array();
+
+	return traverseDOM(document.body, className, results);
 };
+
+
+var traverseDOM = function (node, className, matches) {
+	var numClasses = 0;
+	var numChildNodes = 0;
+
+	if(node.classList) {
+		numClasses = node.classList.length;
+	}
+
+	if(node.childNodes) {
+		numChildNodes = node.childNodes.length;
+	}
+	
+	// looks through the class list of the node to see if there is a match
+	if(numClasses>0) {
+		for(var i=0; i<numClasses; i++) {
+			if(node.classList[i]===className) {
+				matches.push(node);
+
+				console.log("node" + node);
+				console.log("array: " + matches);
+			}
+		}
+	}
+
+	// if there are child nodes, recurse through those
+	if(numChildNodes>0) {
+		for(var i=0; i<numChildNodes; i++) {
+			traverseDOM(node.childNodes[i], className, matches);
+		}
+	}
+}
